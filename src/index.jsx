@@ -4,8 +4,8 @@ let React = require("./lib/myReact").default;
 // import ReactDom from "react-dom";
 // import React from "react";
 
-function Cmp() {
-  return "function Cmp";
+function Cmp(props) {
+  return <div style="color: red">tag is {props.tag || props.name}</div>;
 }
 
 class Cmp2 extends React.Component {
@@ -20,11 +20,11 @@ class Cmp2 extends React.Component {
 
 const jsx = (
   <div name="bigdiv" className="wrapper" tag="text">
-    <Cmp tag="a" className="cmp" />
+    <Cmp tag="function!" className="cmp" />
     <Cmp2 tag="Cmp2" className="cmpCmp2" name="getName:cmp2" class="classCmp" />
     <div name="firstDiv">
       firstDiv
-      <Cmp />
+      <Cmp name="just a cmp function" />
     </div>
     <div name="notext" />
     <div name="innerDiv">

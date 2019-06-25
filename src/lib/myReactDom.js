@@ -22,7 +22,7 @@ function createNode(vnode) {
     }
     return dom;
   } else if (vType == 2) {
-    return createNode(type());
+    return createNode(type(props || {}));
   } else {
     let ins = new type(props);
     return createNode(ins.render());
