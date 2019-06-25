@@ -5,9 +5,6 @@ export default {
 };
 
 function createNode(vnode) {
-  if (typeof vnode === "string") {
-    return document.createTextNode(vnode);
-  }
   let { vType, type, props, children } = vnode;
   if (vType === 3) {
     let dom = document.createElement(type);
@@ -17,14 +14,23 @@ function createNode(vnode) {
       });
     if (children && children.length) {
       children.forEach(c => {
-        dom.appendChild(createNode(c));
+        if (c instanceof Array) {
+          c.forEach(vnode => {
+            dom.appendChild(createNode(vnode));
+          });
+        } else {
+          dom.appendChild(createNode(c));
+        }
       });
     }
     return dom;
   } else if (vType == 2) {
     return createNode(type(props || {}));
-  } else {
+  } else if (vType == 1) {
     let ins = new type(props);
     return createNode(ins.render());
+  } else {
+    // TextNode has no vType
+    return document.createTextNode(vnode);
   }
 }
